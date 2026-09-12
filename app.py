@@ -265,7 +265,8 @@ def login_page() -> None:
 
         st.markdown(
             '<footer class="fil-footer"><span>Flyer Interview Lab</span>'
-            '<span>Developed by Tessa</span></footer>',
+            '<span>Developed by Ying-Ju Chen &middot; '
+            '<a href="mailto:ychen4@udayton.edu">ychen4@udayton.edu</a></span></footer>',
             unsafe_allow_html=True,
         )
 
