@@ -1,0 +1,6 @@
+streamlit>=1.42
+Authlib>=1.3.2
+google-genai>=1.75
+PyMuPDF>=1.26
+python-dotenv>=1.0
+reportlab>=5.0

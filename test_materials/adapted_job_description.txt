@@ -1,0 +1,30 @@
+SYNTHETIC TEST JOB DESCRIPTION
+
+Role: Market Research and Data Analytics Intern
+Employer: Example Professional Services Firm
+Location: Hybrid
+
+Role summary
+Support a professional services team by gathering, organizing, and analyzing market and operational data. The intern will help turn information from public and internal sources into clear reports, dashboards, and presentation materials for business decisions.
+
+Responsibilities
+- Research industry trends, competitors, economic developments, and prospective clients.
+- Collect, clean, organize, and analyze quantitative and qualitative data.
+- Maintain accurate spreadsheets, trackers, and research repositories.
+- Build recurring reports and simple dashboards for business metrics.
+- Identify patterns and communicate useful conclusions to technical and nontechnical colleagues.
+- Prepare concise client briefs, presentation slides, and supporting documentation.
+- Work collaboratively, protect confidential information, and complete occasional ad hoc analysis.
+
+Qualifications
+- Current junior or senior studying Data Analytics, Statistics, Actuarial Science, Mathematics, Economics, Information Systems, Finance, or a related field.
+- Strong analytical reasoning, attention to detail, and willingness to learn.
+- Clear written and verbal communication and the ability to work on a team.
+- Working knowledge of Microsoft Excel, Word, and PowerPoint.
+- Basic experience with data analysis and reporting.
+- Familiarity with Power BI, Tableau, SQL, or similar analytics tools is helpful but not required.
+- Experience conducting business or market research is helpful.
+
+Testing note
+This description is an original, shortened adaptation created only for software testing. It was informed by an EY Market Research Data Analytics Support posting viewed in September 2026:
+https://careers.ey.com/ey/job/ACCRA-Assurance-NSS-Market-Research-Data-Analytics-Support/1416592933/
