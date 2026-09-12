@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from html import escape
 from pathlib import Path
 
 import streamlit as st
@@ -39,6 +40,46 @@ st.set_page_config(
     page_icon="🎤",
     layout="wide",
     initial_sidebar_state="collapsed",
+)
+
+# The app uses intentionally light UD-branded surfaces. Explicit foreground
+# colors prevent Streamlit's "System" theme from placing light text on them
+# when the operating system is using a dark appearance.
+st.markdown(
+    """
+    <style>
+    html { color-scheme: light; }
+    [data-testid="stAppViewContainer"] {
+        background: #f6f7fa;
+        color: #172033;
+    }
+    [data-testid="stAppViewContainer"] :where(
+        h1, h2, h3, h4, h5, h6, p, label, li, span
+    ) { color: inherit; }
+    [data-testid="stCaptionContainer"] { color: #526279; }
+    div[data-baseweb="select"] > div,
+    div[data-testid="stTextInput"] input,
+    div[data-testid="stTextArea"] textarea {
+        color: #172033;
+        background-color: #ffffff;
+    }
+    div[data-testid="stButton"] > button[kind="secondary"] {
+        color: #172033;
+        background: #ffffff;
+        border-color: #9da9b8;
+    }
+    .fil-account {
+        margin: 0.15rem 0 0.75rem;
+        padding: 0.65rem 0.85rem;
+        color: #33445c;
+        background: #eef2f6;
+        border: 1px solid #d9e0e8;
+        border-radius: 10px;
+        font-size: 0.92rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
 
@@ -988,10 +1029,20 @@ def app_page() -> None:
     if dev_mode_enabled():
         st.caption("Local development mode · Authentication bypassed")
     else:
-        user_name = st.user.get("name", st.user.get("email", "Flyer"))
-        top_col, logout_col = st.columns([5, 1])
-        top_col.caption(f"Signed in as {user_name}")
-        logout_col.button("Sign out", on_click=logout_and_clear, use_container_width=True)
+        user_name = escape(str(st.user.get("name", st.user.get("email", "Flyer"))))
+        user_email = escape(str(st.user.get("email", "")))
+        top_col, logout_col = st.columns([4, 1.35], vertical_alignment="center")
+        top_col.markdown(
+            f'<div class="fil-account"><strong>Signed in:</strong> '
+            f'{user_name} &middot; {user_email}</div>',
+            unsafe_allow_html=True,
+        )
+        logout_col.button(
+            "Sign out securely",
+            on_click=logout_and_clear,
+            use_container_width=True,
+            help="Sign out and clear this practice session from the app.",
+        )
 
     screen = st.session_state.setdefault("app_screen", "setup")
     if screen == "profile_review":
