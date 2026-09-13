@@ -92,8 +92,6 @@ st.markdown(
     [data-testid="stTooltipHoverTarget"] svg,
     [data-testid="stWidgetLabelHelp"] svg {
         color: #687386 !important;
-        fill: currentColor !important;
-        stroke: currentColor !important;
         opacity: 1 !important;
     }
     [data-testid="stTooltipIcon"]:hover,
