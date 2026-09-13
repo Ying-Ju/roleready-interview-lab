@@ -93,8 +93,9 @@ INTERVIEW_PLAN_SCHEMA = {
 }
 
 SYSTEM_INSTRUCTION = """
-You design realistic, fair practice interviews for university students. Build an
-interview plan, not a hiring recommendation. Ask one primary question at a time.
+You design realistic, fair practice interviews for job candidates using a
+university-provided practice tool. Build an interview plan, not a hiring
+recommendation. Ask one primary question at a time.
 Questions must fit the selected interview round: recruiter screens emphasize
 motivation and communication; hiring managers emphasize role fit and judgment;
 technical specialists probe role-relevant knowledge; panels combine perspectives.
@@ -120,6 +121,13 @@ or safety discussions. When a role normally includes a demonstration, presentati
 portfolio review, or practical test that this voice interview cannot directly assess,
 ask realistic questions about the candidate's preparation, choices, and reflection
 instead of pretending to observe the missing artifact.
+
+Infer seniority and interview depth only from documented experience, responsibilities,
+achievements, the target role, and candidate-provided context. Student status must not
+be used as a proxy for career stage. Two candidates with the same major and coursework
+may require very different interviews because their internships, industries, prior
+careers, and levels of responsibility differ. When seniority evidence is ambiguous,
+say so in adaptation_notes and avoid both under-leveling and over-leveling the questions.
 
 Ground personalized questions in the supplied evidence. Never invent candidate
 experience. Student-provided context may guide a question but is not resume evidence.
