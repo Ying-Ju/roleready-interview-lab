@@ -336,6 +336,22 @@ def login_page() -> None:
             background: #eef1f5;
             font-size: 0.84rem;
         }
+        .fil-responsible {
+            margin-top: 24px;
+            padding: 18px 22px;
+            color: #526279;
+            background: #f7f8fb;
+            border: 1px solid #e0e4eb;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+        .fil-responsible strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #172033;
+            font-size: 0.96rem;
+        }
         [data-testid="stCaptionContainer"] p {
             font-size: 0.92rem;
             line-height: 1.55;
@@ -402,8 +418,19 @@ def login_page() -> None:
                 )
 
         st.markdown(
+            """
+            <div class="fil-responsible">
+              <strong>Responsible AI use</strong>
+              Use AI-generated questions and feedback as coaching—not as a definitive
+              evaluation of your ability or employability. AI can make mistakes, so
+              review its suggestions critically and do not upload sensitive information.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.markdown(
             '<footer class="fil-footer"><span>Flyer Interview Lab</span>'
-            '<span>Developed by Ying-Ju Chen &middot; '
+            '<span>Maintained by Ying-Ju Chen &middot; '
             '<a href="mailto:ychen4@udayton.edu">ychen4@udayton.edu</a></span></footer>',
             unsafe_allow_html=True,
         )
