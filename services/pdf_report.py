@@ -133,8 +133,36 @@ def create_feedback_pdf(
         Paragraph(_text(feedback.get("communication")), body),
         Paragraph("Connection to the role", heading),
         Paragraph(_text(feedback.get("role_alignment")), body),
-        Paragraph("Focus for the next practice", heading),
     ])
+    priorities = feedback.get("preparation_priorities", [])
+    if priorities:
+        story.extend([
+            Paragraph("Preparation priorities", heading),
+            Paragraph(
+                "Potential bottlenecks are included only when supported by the supplied "
+                "materials and responses. They are preparation advice, not judgments "
+                "about ability, employability, or hiring outcomes.",
+                small,
+            ),
+        ])
+        for item in priorities:
+            box = Table([[Paragraph(
+                "<b>" + _text(item.get("priority")) + "</b><br/>"
+                "<font color='#596273'>Evidence considered: "
+                + _text(item.get("evidence_basis")) + "</font><br/>"
+                "<b>Recommended action:</b> "
+                + _text(item.get("recommendation")), body)]], colWidths=[6.45 * inch])
+            box.setStyle(TableStyle([
+                ("BACKGROUND", (0, 0), (-1, -1), LIGHT_BLUE),
+                ("BOX", (0, 0), (-1, -1), 0.5, colors.HexColor("#C8D8E5")),
+                ("LEFTPADDING", (0, 0), (-1, -1), 10),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 10),
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            ]))
+            story.extend([box, Spacer(1, 6)])
+
+    story.append(Paragraph("Focus for the next practice", heading))
     for item in feedback.get("next_practice_focus", []):
         story.append(Paragraph("- " + _text(item), body))
     story.extend([Spacer(1, 8), Paragraph(

@@ -1072,6 +1072,19 @@ def feedback_page() -> None:
         st.write(feedback["communication"])
         st.markdown("### Connection to the role")
         st.write(feedback["role_alignment"])
+        priorities = feedback.get("preparation_priorities", [])
+        if priorities:
+            st.markdown("### Preparation priorities")
+            st.caption(
+                "Potential career-readiness bottlenecks are shown only when supported "
+                "by the materials and interview responses. They are preparation advice, "
+                "not judgments about ability, employability, or hiring outcomes."
+            )
+            for item in priorities:
+                with st.container(border=True):
+                    st.markdown(f"**{item['priority']}**")
+                    st.caption(f"Evidence considered: {item['evidence_basis']}")
+                    st.write(f"Recommended action: {item['recommendation']}")
         st.markdown("### Focus for the next practice")
         for item in feedback["next_practice_focus"]:
             st.markdown(f"- {item}")

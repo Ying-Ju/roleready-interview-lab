@@ -20,11 +20,21 @@ FEEDBACK_SCHEMA = {
         },
         "communication": {"type": "string"},
         "role_alignment": {"type": "string"},
+        "preparation_priorities": {
+            "type": "array", "minItems": 0, "maxItems": 4,
+            "items": {"type": "object", "properties": {
+                "priority": {"type": "string"},
+                "evidence_basis": {"type": "string"},
+                "recommendation": {"type": "string"},
+            },
+                "required": ["priority", "evidence_basis", "recommendation"],
+                "additionalProperties": False},
+        },
         "next_practice_focus": {"type": "array", "minItems": 2, "maxItems": 4,
                                 "items": {"type": "string"}},
     },
     "required": ["summary", "strengths", "improvements", "communication",
-                 "role_alignment", "next_practice_focus"],
+                 "role_alignment", "preparation_priorities", "next_practice_focus"],
     "additionalProperties": False,
 }
 
@@ -37,6 +47,17 @@ specific, actionable feedback appropriate to the candidate's evidenced backgroun
 the target role. Do not assume the candidate is entry-level because they use a university
 service. Evidence must be a short paraphrase, not a fabricated quotation. If the
 transcript is incomplete, say so and limit the conclusions accordingly.
+
+Identify a career-readiness bottleneck only when it is supported by sufficient,
+specific evidence from the target role requirements and the supplied candidate
+materials or interview responses. Distinguish between a skill being absent and its
+evidence merely being unclear. Never infer a deficit from a degree, major, accent,
+identity, or lack of a particular keyword. Do not judge the candidate's overall
+ability, employability, fit, or likelihood of being hired. Express each supported
+bottleneck as a neutral preparation priority with a practical recommendation. Use
+"the supplied materials or responses did not demonstrate..." rather than "you cannot"
+or "you lack." Return an empty preparation_priorities array when the evidence is
+insufficient or no material bottleneck is apparent.
 """.strip()
 
 
@@ -57,5 +78,8 @@ TRANSCRIPT:
 {json.dumps(transcript, ensure_ascii=False)}
 
 Focus on clarity, specificity, relevance, use of examples, and connection to the
-role. Treat transcription errors cautiously. Return the requested structured feedback.
+role. For preparation priorities, compare only explicit or clearly central role
+requirements with evidence in the supplied materials and responses; do not turn every
+preferred qualification into a gap. Treat transcription errors cautiously. Return the
+requested structured feedback.
 """.strip()
