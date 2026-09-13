@@ -35,6 +35,19 @@ APP_NAME = "Flyer Interview Lab"
 ALLOWED_EMAIL_DOMAIN = "udayton.edu"
 DEV_MODE_ENV_VAR = "FLYER_DEV_MODE"
 
+INTERVIEW_ROUND_LABELS = {
+    "Recruiter / HR screen": "Initial screening (recruiter or HR)",
+    "Hiring manager": "Direct supervisor or hiring lead",
+    "Technical specialist": "Subject-matter or skills interview",
+    "Panel / final interview": "Panel or final interview",
+    "Full interview loop": "Full interview process",
+}
+
+
+def interview_round_label(value: str) -> str:
+    """Return the student-facing name for an internal interview-round value."""
+    return INTERVIEW_ROUND_LABELS.get(value, value)
+
 st.set_page_config(
     page_title=APP_NAME,
     page_icon="🎤",
@@ -563,14 +576,14 @@ def setup_page() -> None:
         with round_col:
             interview_round = st.selectbox(
                 "Interview round",
-                options=[
-                    "Recruiter / HR screen",
-                    "Hiring manager",
-                    "Technical specialist",
-                    "Panel / final interview",
-                    "Full interview loop",
-                ],
-                index=2,
+                options=list(INTERVIEW_ROUND_LABELS),
+                index=1,
+                format_func=lambda value: INTERVIEW_ROUND_LABELS[value],
+                help=(
+                    "Choose the closest stage named in the interview invitation. "
+                    "For education roles, a hiring lead may be a principal or "
+                    "department chair, and a panel may be a search committee."
+                ),
             )
         with level_col:
             challenge_level = st.selectbox(
@@ -589,6 +602,10 @@ def setup_page() -> None:
                     "the app uses the shared free API allocation."
                 ),
             )
+        st.caption(
+            "Not sure about the round? Choose Direct supervisor or hiring lead. "
+            "The app will adapt the interviewer identity to the job and organization."
+        )
 
         consent = st.checkbox(
             "I understand that my documents are used only for this practice session "
@@ -667,7 +684,9 @@ def profile_review_page() -> None:
         st.markdown(f"**Job title:** {setup['job_title']}")
         st.markdown(f"**Company:** {setup['company'] or 'Not provided'}")
         st.markdown(f"**Résumé:** {setup['resume_name']}")
-        st.markdown(f"**Interview round:** {setup['interview_round']}")
+        st.markdown(
+            f"**Interview round:** {interview_round_label(setup['interview_round'])}"
+        )
         st.markdown(f"**Challenge level:** {setup['challenge_level']}")
         st.markdown(
             f"**Interview length:** {min(int(setup.get('interview_minutes', 10)), 10)} minutes"
@@ -841,7 +860,7 @@ def plan_ready_page() -> None:
         "Interview length",
         f"{min(int(setup.get('interview_minutes', 10)), 10)} min",
     )
-    metric_col3.metric("Round", setup["interview_round"])
+    metric_col3.metric("Round", interview_round_label(setup["interview_round"]))
 
     context = plan.get("interview_context", {})
     interviewer_identity = context.get("interviewer_identity")
@@ -891,7 +910,8 @@ def voice_interview_page() -> None:
 
     st.markdown(f"## {setup['job_title']} voice interview")
     st.caption(
-        f"{setup['interview_round']} · {setup['challenge_level']} · "
+        f"{interview_round_label(setup['interview_round'])} · "
+        f"{setup['challenge_level']} · "
         "Speak in English as you would in a real interview."
     )
     st.info(
@@ -1083,7 +1103,8 @@ def text_interview_page() -> None:
     total = len(plan["questions"])
     st.markdown(f"## {setup['job_title']} mock interview")
     st.caption(
-        f"{setup['interview_round']} · {setup['challenge_level']} · "
+        f"{interview_round_label(setup['interview_round'])} · "
+        f"{setup['challenge_level']} · "
         "Detailed feedback is saved until the interview ends."
     )
     completed_count = runtime["question_index"] + int(runtime["completed"])
