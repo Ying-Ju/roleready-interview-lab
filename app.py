@@ -83,6 +83,24 @@ st.markdown(
     div[data-baseweb="select"] svg {
         fill: #526279 !important;
     }
+    [data-testid="stTooltipIcon"],
+    [data-testid="stTooltipHoverTarget"],
+    [data-testid="stWidgetLabelHelp"] {
+        color: #687386 !important;
+    }
+    [data-testid="stTooltipIcon"] svg,
+    [data-testid="stTooltipHoverTarget"] svg,
+    [data-testid="stWidgetLabelHelp"] svg {
+        color: #687386 !important;
+        fill: currentColor !important;
+        stroke: currentColor !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stTooltipIcon"]:hover,
+    [data-testid="stTooltipHoverTarget"]:hover,
+    [data-testid="stWidgetLabelHelp"]:hover {
+        color: #004b87 !important;
+    }
     div[data-testid="stButton"] > button[kind="secondary"],
     div[data-testid="stFormSubmitButton"] > button[kind="secondary"],
     div[data-testid="stDownloadButton"] > button,
