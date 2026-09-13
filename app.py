@@ -166,6 +166,14 @@ st.markdown(
         border-radius: 10px;
         font-size: 0.92rem;
     }
+    .fil-app-brand {
+        margin: 0.15rem 0 0.75rem;
+        color: #ce1141;
+        font-size: 0.94rem;
+        font-weight: 750;
+        letter-spacing: 0.055em;
+        text-transform: uppercase;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -468,7 +476,6 @@ def setup_page() -> None:
             background: #ce1141;
         }
         </style>
-        <p class="setup-kicker">Flyer Interview Lab</p>
         <h1 class="setup-title">Prepare your mock interview</h1>
         <p class="setup-copy">
           Provide the position and application materials you are actually using.
@@ -1116,12 +1123,22 @@ def text_interview_page() -> None:
 def app_page() -> None:
     """Render the authenticated or local-development application."""
     if dev_mode_enabled():
+        st.markdown(
+            '<div class="fil-app-brand">Flyer Interview Lab</div>',
+            unsafe_allow_html=True,
+        )
         st.caption("Local development mode · Authentication bypassed")
     else:
         user_name = escape(str(st.user.get("name", st.user.get("email", "Flyer"))))
         user_email = escape(str(st.user.get("email", "")))
-        top_col, logout_col = st.columns([4, 1.35], vertical_alignment="center")
-        top_col.markdown(
+        brand_col, account_col, logout_col = st.columns(
+            [1.65, 4, 1.35], vertical_alignment="center"
+        )
+        brand_col.markdown(
+            '<div class="fil-app-brand">Flyer Interview Lab</div>',
+            unsafe_allow_html=True,
+        )
+        account_col.markdown(
             f'<div class="fil-account"><strong>Signed in:</strong> '
             f'{user_name} &middot; {user_email}</div>',
             unsafe_allow_html=True,
