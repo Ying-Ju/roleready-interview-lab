@@ -1130,7 +1130,6 @@ def app_page() -> None:
             "Sign out securely",
             on_click=logout_and_clear,
             use_container_width=True,
-            help="Sign out and clear this practice session from the app.",
         )
 
     screen = st.session_state.setdefault("app_screen", "setup")
