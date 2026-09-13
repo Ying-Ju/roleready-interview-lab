@@ -66,7 +66,10 @@ st.markdown(
     div[data-testid="stButton"] > button[kind="secondary"],
     div[data-testid="stFormSubmitButton"] > button[kind="secondary"],
     div[data-testid="stDownloadButton"] > button,
-    div[data-testid="stLinkButton"] > a {
+    div[data-testid="stLinkButton"] > a,
+    button[data-testid="stBaseButton-secondary"],
+    button[data-testid="stBaseButton-minimal"],
+    [data-testid="stFileUploader"] button {
         color: #172033 !important;
         background: #ffffff !important;
         border-color: #9da9b8 !important;
@@ -74,19 +77,24 @@ st.markdown(
     div[data-testid="stButton"] > button[kind="secondary"]:hover,
     div[data-testid="stFormSubmitButton"] > button[kind="secondary"]:hover,
     div[data-testid="stDownloadButton"] > button:hover,
-    div[data-testid="stLinkButton"] > a:hover {
+    div[data-testid="stLinkButton"] > a:hover,
+    button[data-testid="stBaseButton-secondary"]:hover,
+    button[data-testid="stBaseButton-minimal"]:hover,
+    [data-testid="stFileUploader"] button:hover {
         color: #002f56 !important;
         background: #eaf2f8 !important;
         border-color: #004b87 !important;
     }
     div[data-testid="stButton"] > button[kind="primary"],
-    div[data-testid="stFormSubmitButton"] > button[kind="primary"] {
+    div[data-testid="stFormSubmitButton"] > button[kind="primary"],
+    button[data-testid="stBaseButton-primary"] {
         color: #ffffff !important;
         background: #ce1141 !important;
         border-color: #ce1141 !important;
     }
     div[data-testid="stButton"] > button[kind="primary"]:hover,
-    div[data-testid="stFormSubmitButton"] > button[kind="primary"]:hover {
+    div[data-testid="stFormSubmitButton"] > button[kind="primary"]:hover,
+    button[data-testid="stBaseButton-primary"]:hover {
         background: #a6192e !important;
         border-color: #a6192e !important;
     }
@@ -100,7 +108,9 @@ st.markdown(
     div[data-testid="stButton"] button p,
     div[data-testid="stFormSubmitButton"] button p,
     div[data-testid="stDownloadButton"] button p,
-    div[data-testid="stLinkButton"] a p {
+    div[data-testid="stLinkButton"] a p,
+    button[data-testid^="stBaseButton-"] p,
+    [data-testid="stFileUploader"] button p {
         color: inherit !important;
     }
     .fil-account {
