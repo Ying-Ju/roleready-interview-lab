@@ -83,21 +83,29 @@ st.markdown(
     div[data-baseweb="select"] svg {
         fill: #526279 !important;
     }
-    [data-testid="stTooltipIcon"],
-    [data-testid="stTooltipHoverTarget"],
-    [data-testid="stWidgetLabelHelp"] {
-        color: #687386 !important;
+    [data-testid="stTooltipIcon"] svg { display: none !important; }
+    [data-testid="stTooltipIcon"]::before {
+        content: "?";
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.05rem;
+        height: 1.05rem;
+        box-sizing: border-box;
+        color: #526279;
+        background: #ffffff;
+        border: 2px solid #7b8798;
+        border-radius: 50%;
+        font-size: 0.72rem;
+        font-weight: 800;
+        line-height: 1;
+        opacity: 1;
+        pointer-events: none;
     }
-    [data-testid="stTooltipIcon"] svg,
-    [data-testid="stTooltipHoverTarget"] svg,
-    [data-testid="stWidgetLabelHelp"] svg {
-        color: #687386 !important;
-        opacity: 1 !important;
-    }
-    [data-testid="stTooltipIcon"]:hover,
-    [data-testid="stTooltipHoverTarget"]:hover,
-    [data-testid="stWidgetLabelHelp"]:hover {
-        color: #004b87 !important;
+    [data-testid="stTooltipHoverTarget"]:hover
+    [data-testid="stTooltipIcon"]::before {
+        color: #004b87;
+        border-color: #004b87;
     }
     div[data-testid="stButton"] > button[kind="secondary"],
     div[data-testid="stFormSubmitButton"] > button[kind="secondary"],
