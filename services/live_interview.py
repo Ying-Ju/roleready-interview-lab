@@ -9,16 +9,9 @@ from typing import Any
 
 from google import genai
 
+from services.interviewer_personas import persona_details
 
 DEFAULT_LIVE_MODEL = "gemini-3.1-flash-live-preview"
-
-ROUND_VOICES = {
-    "Recruiter / HR screen": "Aoede",
-    "Hiring manager": "Charon",
-    "Technical specialist": "Iapetus",
-    "Panel / final interview": "Kore",
-    "Full interview loop": "Charon",
-}
 
 ROUND_TONES = {
     "Recruiter / HR screen": (
@@ -42,11 +35,6 @@ ROUND_TONES = {
         "as the interview moves through behavioral and technical topics."
     ),
 }
-
-
-def voice_for_round(interview_round: str) -> str:
-    """Return a stable, distinct Gemini voice for each interviewer role."""
-    return ROUND_VOICES.get(interview_round, ROUND_VOICES["Hiring manager"])
 
 
 def tone_for_round(interview_round: str) -> str:
@@ -96,11 +84,11 @@ PRIVATE INTERVIEW PLAN:
 
 
 def mint_live_token(
-    *, api_key: str, instructions: str, interview_round: str
+    *, api_key: str, instructions: str, interviewer_persona: str
 ) -> dict[str, str]:
     """Mint a one-use token locked to the configured Live model and instructions."""
     model = os.getenv("FLYER_LIVE_MODEL", DEFAULT_LIVE_MODEL).strip()
-    voice = voice_for_round(interview_round)
+    voice = persona_details(interviewer_persona)["voice"]
     now = dt.datetime.now(dt.timezone.utc)
     client = genai.Client(api_key=api_key)
     live_config = {
@@ -137,4 +125,9 @@ def mint_live_token(
             "lock_additional_fields": [],
         }
     )
-    return {"token": token.name, "model": model, "voice": voice}
+    return {
+        "token": token.name,
+        "model": model,
+        "voice": voice,
+        "interviewer_persona": interviewer_persona,
+    }

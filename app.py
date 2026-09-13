@@ -20,6 +20,7 @@ from services.document_parser import (
 )
 from services.feedback_analyzer import generate_feedback
 from services.interview_planner import generate_interview_plan
+from services.interviewer_personas import choose_interviewer_persona
 from services.live_bridge import live_interview_component
 from services.live_interview import build_live_instructions, mint_live_token
 from services.pdf_report import create_feedback_pdf
@@ -660,6 +661,7 @@ def setup_page() -> None:
         st.session_state.pop("interview_profile", None)
         st.session_state.pop("student_background_answers", None)
         st.session_state.pop("interview_plan", None)
+        st.session_state.pop("interviewer_persona", None)
         st.session_state.pop("interview_transcript", None)
         st.session_state.pop("interview_feedback", None)
         st.session_state.app_screen = "profile_review"
@@ -775,6 +777,9 @@ def profile_review_page() -> None:
                                 "student_background_answers", {}
                             ),
                         )
+                        st.session_state.interviewer_persona = (
+                            choose_interviewer_persona()
+                        )
                     st.session_state.app_screen = "plan_ready"
                     st.rerun()
                 except ProfileAnalysisUnavailable as exc:
@@ -826,6 +831,7 @@ def profile_review_page() -> None:
                         )
                         st.session_state.student_background_answers = {}
                         st.session_state.pop("interview_plan", None)
+                        st.session_state.pop("interviewer_persona", None)
                     st.rerun()
                 except DocumentParseError as exc:
                     st.error(str(exc))
@@ -932,6 +938,9 @@ def voice_interview_page() -> None:
             if not api_key:
                 st.error("GOOGLE_API_KEY is not configured for this app.")
                 return
+            interviewer_persona = st.session_state.setdefault(
+                "interviewer_persona", choose_interviewer_persona()
+            )
             instructions = build_live_instructions(
                 preferred_name=setup["preferred_name"],
                 job_title=setup["job_title"],
@@ -943,7 +952,7 @@ def voice_interview_page() -> None:
                     st.session_state.live_token = mint_live_token(
                         api_key=api_key,
                         instructions=instructions,
-                        interview_round=setup["interview_round"],
+                        interviewer_persona=interviewer_persona,
                     )
                 st.rerun()
             except Exception as exc:
@@ -964,7 +973,12 @@ def voice_interview_page() -> None:
             token=token_info["token"],
             model=token_info["model"],
             voice=token_info.get("voice", "Charon"),
-            interview_round=setup["interview_round"],
+            interviewer_persona=token_info.get(
+                "interviewer_persona",
+                st.session_state.setdefault(
+                    "interviewer_persona", choose_interviewer_persona()
+                ),
+            ),
             duration_minutes=min(int(setup.get("interview_minutes", 10)), 10),
             interviewer_label=plan.get("interview_context", {}).get(
                 "interviewer_identity", ""
