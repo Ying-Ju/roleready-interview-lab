@@ -20,19 +20,53 @@ ROUND_VOICES = {
     "Full interview loop": "Charon",
 }
 
+ROUND_TONES = {
+    "Recruiter / HR screen": (
+        "Warm, encouraging, and conversational while remaining professional. Build "
+        "rapport and use light small talk naturally, but still evaluate the answer."
+    ),
+    "Hiring manager": (
+        "Approachable and conversational, but more focused on motivation, judgment, "
+        "collaboration, and readiness for the day-to-day work."
+    ),
+    "Technical specialist": (
+        "Professional, precise, and intellectually engaged. Probe technical reasoning "
+        "carefully without sounding cold, adversarial, or condescending."
+    ),
+    "Panel / final interview": (
+        "Polished, structured, and moderately formal, reflecting a final-stage meeting "
+        "with several stakeholder perspectives while speaking as the panel chair."
+    ),
+    "Full interview loop": (
+        "Professional and personable. Begin conversationally, then become more focused "
+        "as the interview moves through behavioral and technical topics."
+    ),
+}
+
 
 def voice_for_round(interview_round: str) -> str:
     """Return a stable, distinct Gemini voice for each interviewer role."""
     return ROUND_VOICES.get(interview_round, ROUND_VOICES["Hiring manager"])
 
 
+def tone_for_round(interview_round: str) -> str:
+    """Return role-appropriate delivery guidance for the live interviewer."""
+    return ROUND_TONES.get(interview_round, ROUND_TONES["Hiring manager"])
+
+
 def build_live_instructions(
     *, preferred_name: str, job_title: str, interview_round: str, plan: dict[str, Any]
 ) -> str:
     public_plan = {key: value for key, value in plan.items() if not key.startswith("_")}
+    tone = tone_for_round(interview_round)
     return f"""
 You are conducting a realistic English-language mock interview for {preferred_name},
 who is practicing for a {job_title} position. The round is {interview_round}.
+
+INTERVIEWER TONE FOR THIS ROUND:
+{tone}
+The selected challenge level controls the depth and persistence of follow-up questions,
+not warmth or courtesy. Never become rude, hostile, intimidating, or dismissive.
 
 Follow the private interview plan below. Ask one question at a time and wait for the
 candidate's spoken answer. Begin with the plan's introductory question. You may ask
@@ -45,6 +79,13 @@ evidence. After the final question, speak the plan's closing message and end it 
 the exact sentence "That concludes our interview. Thank you for your time today."
 Then call the end_interview function exactly once. Never call it before that sentence.
 The fixed sentence is also an application fallback when a tool call is unavailable.
+
+Conduct the interview in English. If the candidate occasionally uses a non-English word
+or short phrase, continue naturally when their meaning is clear. If a substantial answer
+is given in another language, do not translate it or treat it as an English response.
+Say in English: "For this practice interview, please answer in English. Would you like
+to try that response again?" Allow one retry, then continue professionally. Do not
+criticize an accent or equate accent with communication ability.
 
 PRIVATE INTERVIEW PLAN:
 {json.dumps(public_plan, ensure_ascii=False)}
