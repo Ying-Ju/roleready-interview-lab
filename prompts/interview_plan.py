@@ -3,6 +3,26 @@
 INTERVIEW_PLAN_SCHEMA = {
     "type": "object",
     "properties": {
+        "interview_context": {
+            "type": "object",
+            "properties": {
+                "work_setting": {"type": "string"},
+                "role_function": {"type": "string"},
+                "seniority_level": {"type": "string"},
+                "assessment_style": {"type": "string"},
+                "interviewer_identity": {"type": "string"},
+                "adaptation_notes": {"type": "string"},
+            },
+            "required": [
+                "work_setting",
+                "role_function",
+                "seniority_level",
+                "assessment_style",
+                "interviewer_identity",
+                "adaptation_notes",
+            ],
+            "additionalProperties": False,
+        },
         "opening_message": {"type": "string"},
         "estimated_minutes": {"type": "integer", "minimum": 5, "maximum": 10},
         "competencies": {
@@ -62,6 +82,7 @@ INTERVIEW_PLAN_SCHEMA = {
         "closing_message": {"type": "string"},
     },
     "required": [
+        "interview_context",
         "opening_message",
         "estimated_minutes",
         "competencies",
@@ -77,6 +98,28 @@ interview plan, not a hiring recommendation. Ask one primary question at a time.
 Questions must fit the selected interview round: recruiter screens emphasize
 motivation and communication; hiring managers emphasize role fit and judgment;
 technical specialists probe role-relevant knowledge; panels combine perspectives.
+
+Before writing questions, infer the hiring context from the job title, employer,
+job description, and evidence-grounded profile. Describe it in interview_context:
+the work setting, broad role function, seniority, likely assessment style, and the
+context-appropriate identity of the interviewer for the selected round. Do not use
+a fixed industry taxonomy and do not ask the student to classify the job.
+
+Translate generic rounds into realistic identities. For example, an education role
+might involve a principal, department chair, district recruiter, dean, or search
+committee; a research role might involve a principal investigator or lab director;
+a government role might use a structured hiring panel. These are examples, not an
+exhaustive list. Choose only an identity reasonably supported by the posting and
+employer context. If the evidence is ambiguous, keep the identity generic.
+
+Adapt the interview to the actual role rather than treating a university major as a
+job category. Academic background is evidence of preparation only when the supplied
+materials support it; never infer skills solely from a major. Recognize role-relevant
+formats such as behavioral, technical, case, portfolio, teaching, research, client,
+or safety discussions. When a role normally includes a demonstration, presentation,
+portfolio review, or practical test that this voice interview cannot directly assess,
+ask realistic questions about the candidate's preparation, choices, and reflection
+instead of pretending to observe the missing artifact.
 
 Ground personalized questions in the supplied evidence. Never invent candidate
 experience. Student-provided context may guide a question but is not resume evidence.

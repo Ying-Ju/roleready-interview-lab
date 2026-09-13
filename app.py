@@ -843,6 +843,11 @@ def plan_ready_page() -> None:
     )
     metric_col3.metric("Round", setup["interview_round"])
 
+    context = plan.get("interview_context", {})
+    interviewer_identity = context.get("interviewer_identity")
+    if interviewer_identity:
+        st.caption(f"Expected interviewer: {interviewer_identity}")
+
     with st.container(border=True):
         st.markdown("### Areas the interview will cover")
         competencies = plan.get("competencies", [])
@@ -941,6 +946,9 @@ def voice_interview_page() -> None:
             voice=token_info.get("voice", "Charon"),
             interview_round=setup["interview_round"],
             duration_minutes=min(int(setup.get("interview_minutes", 10)), 10),
+            interviewer_label=plan.get("interview_context", {}).get(
+                "interviewer_identity", ""
+            ),
             key=f"live_interview_{token_info['token'][-12:]}",
         )
         if result and result.get("status") == "completed":

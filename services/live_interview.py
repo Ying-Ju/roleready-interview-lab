@@ -59,9 +59,12 @@ def build_live_instructions(
 ) -> str:
     public_plan = {key: value for key, value in plan.items() if not key.startswith("_")}
     tone = tone_for_round(interview_round)
+    context = plan.get("interview_context", {})
+    interviewer_identity = context.get("interviewer_identity", interview_round)
     return f"""
 You are conducting a realistic English-language mock interview for {preferred_name},
 who is practicing for a {job_title} position. The round is {interview_round}.
+Act as the context-appropriate interviewer identified in the plan: {interviewer_identity}.
 
 INTERVIEWER TONE FOR THIS ROUND:
 {tone}

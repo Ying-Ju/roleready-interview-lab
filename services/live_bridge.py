@@ -30,11 +30,13 @@ def _avatar_data_uri(filename: str) -> str:
 
 def live_interview_component(
     *, token: str, model: str, voice: str, interview_round: str,
-    duration_minutes: int = 10, key: str = "live_interview"
+    duration_minutes: int = 10, interviewer_label: str = "",
+    key: str = "live_interview"
 ) -> dict[str, Any] | None:
     avatar_file, avatar_role = _ROUND_AVATARS.get(
         interview_round, _ROUND_AVATARS["Hiring manager"]
     )
+    avatar_role = interviewer_label.strip() or avatar_role
     return _component(
         token=token,
         model=model,
