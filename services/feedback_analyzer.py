@@ -21,7 +21,9 @@ def generate_feedback(*, api_key: str, setup: dict, profile: dict,
         response_mime_type="application/json",
         response_json_schema=FEEDBACK_SCHEMA,
     )
-    models = tuple(dict.fromkeys((os.getenv("FLYER_TEXT_MODEL", DEFAULT_TEXT_MODEL).strip(),
+    models = tuple(dict.fromkeys((os.getenv(
+        "ROLEREADY_TEXT_MODEL", os.getenv("FLYER_TEXT_MODEL", DEFAULT_TEXT_MODEL)
+    ).strip(),
                                   *FALLBACK_TEXT_MODELS)))
     last_error: Exception | None = None
     for model in models:

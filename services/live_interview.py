@@ -87,7 +87,9 @@ def mint_live_token(
     *, api_key: str, instructions: str, interviewer_persona: str
 ) -> dict[str, str]:
     """Mint a one-use token locked to the configured Live model and instructions."""
-    model = os.getenv("FLYER_LIVE_MODEL", DEFAULT_LIVE_MODEL).strip()
+    model = os.getenv(
+        "ROLEREADY_LIVE_MODEL", os.getenv("FLYER_LIVE_MODEL", DEFAULT_LIVE_MODEL)
+    ).strip()
     voice = persona_details(interviewer_persona)["voice"]
     now = dt.datetime.now(dt.timezone.utc)
     client = genai.Client(api_key=api_key)

@@ -1,4 +1,4 @@
-"""Flyer Interview Lab — standalone Streamlit entry point."""
+"""RoleReady Interview Lab — standalone Streamlit entry point."""
 
 from __future__ import annotations
 
@@ -32,9 +32,8 @@ from services.profile_analyzer import (
 from services.text_interview import evaluate_answer
 
 
-APP_NAME = "Flyer Interview Lab"
-ALLOWED_EMAIL_DOMAIN = "udayton.edu"
-DEV_MODE_ENV_VAR = "FLYER_DEV_MODE"
+APP_NAME = "RoleReady Interview Lab"
+DEV_MODE_ENV_VAR = "ROLEREADY_DEV_MODE"
 
 INTERVIEW_ROUND_LABELS = {
     "Recruiter / HR screen": "Initial screening (recruiter or HR)",
@@ -46,7 +45,7 @@ INTERVIEW_ROUND_LABELS = {
 
 
 def interview_round_label(value: str) -> str:
-    """Return the student-facing name for an internal interview-round value."""
+    """Return the participant-facing name for an internal interview-round value."""
     return INTERVIEW_ROUND_LABELS.get(value, value)
 
 st.set_page_config(
@@ -56,7 +55,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# The app uses intentionally light UD-branded surfaces. Explicit foreground
+# The app uses intentionally light branded surfaces. Explicit foreground
 # colors prevent Streamlit's "System" theme from placing light text on them
 # when the operating system is using a dark appearance.
 st.markdown(
@@ -204,7 +203,8 @@ def auth_is_configured() -> bool:
 
 def dev_mode_enabled() -> bool:
     """Allow an explicit local-only authentication bypass during development."""
-    return os.getenv(DEV_MODE_ENV_VAR, "").strip().lower() in {"1", "true", "yes"}
+    value = os.getenv(DEV_MODE_ENV_VAR, os.getenv("FLYER_DEV_MODE", ""))
+    return value.strip().lower() in {"1", "true", "yes"}
 
 
 def google_api_key() -> str:
@@ -231,7 +231,7 @@ def logout_and_clear() -> None:
 
 
 def login_page() -> None:
-    """Render the public introduction and UD sign-in screen."""
+    """Render the public introduction and Google sign-in screen."""
     st.markdown(
         """
         <style>
@@ -396,10 +396,10 @@ def login_page() -> None:
         with intro_col:
             st.markdown(
                 """
-                <p class="fil-eyebrow">Department of Mathematics · University of Dayton</p>
+                <p class="fil-eyebrow">Role-specific interview practice</p>
                 <h1 class="fil-title">Practice the interview you are actually preparing for.</h1>
                 <p class="fil-lead">
-                  Flyer Interview Lab creates a realistic mock interview from your résumé,
+                  RoleReady Interview Lab creates a realistic mock interview from your résumé,
                   the job description, and the interview round—then gives you focused
                   feedback to improve your next attempt.
                 </p>
@@ -414,17 +414,17 @@ def login_page() -> None:
         with login_col:
             with st.container(border=True):
                 st.markdown("### Ready to practice?")
-                st.caption("Use your University of Dayton account to continue.")
-                if st.button("Sign in with UD", type="primary", use_container_width=True):
+                st.caption("Use a Google account authorized for this closed beta.")
+                if st.button("Sign in with Google", type="primary", use_container_width=True):
                     if auth_is_configured():
                         st.login()
                     else:
                         st.warning(
-                            "UD sign-in is not configured yet. "
+                            "Google sign-in is not configured yet. "
                             "Add the OIDC settings to Streamlit secrets."
                         )
                 st.caption(
-                    "Access is limited to authenticated @udayton.edu accounts."
+                    "Access is limited to approved beta testers."
                 )
                 st.caption(
                     "Uploaded materials tailor the practice session. Do not upload "
@@ -443,19 +443,15 @@ def login_page() -> None:
             unsafe_allow_html=True,
         )
         st.markdown(
-            '<footer class="fil-footer"><span>Flyer Interview Lab</span>'
-            '<span>Maintained by Ying-Ju Chen &middot; '
-            '<a href="mailto:ychen4@udayton.edu">ychen4@udayton.edu</a></span></footer>',
+            '<footer class="fil-footer"><span>RoleReady Interview Lab</span>'
+            '<span>Maintained by Ying-Ju Chen</span></footer>',
             unsafe_allow_html=True,
         )
 
 
 def user_is_allowed() -> bool:
-    """Allow authenticated University of Dayton accounts."""
-    if not getattr(st.user, "is_logged_in", False):
-        return False
-    email = str(st.user.get("email", "")).strip().lower()
-    return email.endswith(f"@{ALLOWED_EMAIL_DOMAIN}")
+    """Allow Google accounts admitted by the configured OAuth application."""
+    return bool(getattr(st.user, "is_logged_in", False))
 
 
 def setup_page() -> None:
@@ -679,7 +675,7 @@ def profile_review_page() -> None:
     st.write(
         "Review the application context, then generate a profile grounded in the "
         "résumé and job description. The profile will guide the interview—not judge "
-        "the student or make a hiring decision."
+        "the candidate or make a hiring decision."
     )
     with st.container(border=True):
         st.markdown(f"**Preferred first name:** {setup['preferred_name']}")
@@ -847,7 +843,7 @@ def profile_review_page() -> None:
 
 
 def plan_ready_page() -> None:
-    """Show a student-safe overview without revealing planned questions."""
+    """Show a candidate-safe overview without revealing planned questions."""
     setup = st.session_state.get("interview_setup", {})
     plan = st.session_state.get("interview_plan", {})
     if not setup or not plan:
@@ -1008,7 +1004,7 @@ def voice_interview_page() -> None:
 
 
 def feedback_page() -> None:
-    """Show the captured transcript and generate student-facing coaching."""
+    """Show the captured transcript and generate participant-facing coaching."""
     setup = st.session_state.get("interview_setup", {})
     profile = st.session_state.get("interview_profile", {})
     transcript = st.session_state.get("interview_transcript", [])
@@ -1105,7 +1101,7 @@ def feedback_page() -> None:
         st.download_button(
             "Download PDF report",
             data=pdf_bytes,
-            file_name="flyer_interview_coaching_report.pdf",
+            file_name="roleready_interview_coaching_report.pdf",
             mime="application/pdf",
             type="primary",
             use_container_width=True,
@@ -1207,18 +1203,18 @@ def app_page() -> None:
     """Render the authenticated or local-development application."""
     if dev_mode_enabled():
         st.markdown(
-            '<div class="fil-app-brand">Flyer Interview Lab</div>',
+            '<div class="fil-app-brand">RoleReady Interview Lab</div>',
             unsafe_allow_html=True,
         )
         st.caption("Local development mode · Authentication bypassed")
     else:
-        user_name = escape(str(st.user.get("name", st.user.get("email", "Flyer"))))
+        user_name = escape(str(st.user.get("name", st.user.get("email", "Guest"))))
         user_email = escape(str(st.user.get("email", "")))
         brand_col, account_col, logout_col = st.columns(
             [1.65, 4, 1.35], vertical_alignment="center"
         )
         brand_col.markdown(
-            '<div class="fil-app-brand">Flyer Interview Lab</div>',
+            '<div class="fil-app-brand">RoleReady Interview Lab</div>',
             unsafe_allow_html=True,
         )
         account_col.markdown(
@@ -1253,7 +1249,7 @@ elif getattr(st.user, "is_logged_in", False):
     if user_is_allowed():
         app_page()
     else:
-        st.error("This application is available only to University of Dayton accounts.")
+        st.error("This Google account is not authorized for the closed beta.")
         st.button("Sign out", on_click=st.logout)
 else:
     login_page()

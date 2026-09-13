@@ -1,20 +1,20 @@
-# Flyer Interview Lab — Beta Overview
+# RoleReady Interview Lab — Beta Overview
 
 Last consolidated: September 13, 2026
 
 ## Beta definition
 
-Flyer Interview Lab has a complete deployable beta workflow: an authorized user
+RoleReady Interview Lab has a complete deployable beta workflow: an authorized user
 can provide real application materials, review the interpreted context, complete
 a time-limited spoken interview, receive coaching, and download a report.
 
-The beta is ready for a small, supervised University of Dayton student pilot. It
+The beta is ready for a small, supervised closed pilot. It
 is not yet positioned as an institution-wide service, commercial product, hiring
 screen, or predictor of employability.
 
-## Current student workflow
+## Current participant workflow
 
-1. Sign in with an authenticated `@udayton.edu` Google account.
+1. Sign in with a Google account authorized for the closed beta.
 2. Enter a preferred first name and job title; employer name is optional.
 3. Upload a résumé in PDF or DOCX format.
 4. Upload a job description in PDF, DOCX, or TXT format, or paste its text.
@@ -23,7 +23,7 @@ screen, or predictor of employability.
 6. Review a profile grounded in the résumé and job description.
 7. Optionally answer a small number of clarifying questions when important
    context is missing.
-8. Build and review a student-safe overview of the private interview plan.
+8. Build and review a candidate-safe overview of the private interview plan.
 9. Complete the spoken mock interview.
 10. Review the transcript and generate coaching feedback.
 11. Download a PDF coaching report, optionally with the transcript appendix.
@@ -33,8 +33,8 @@ screen, or predictor of employability.
 
 ### Access and session safety
 
-- Google OIDC sign-in with an application-level `@udayton.edu` domain check.
-- Google OAuth test-user access for the current closed pilot configuration.
+- Google OIDC sign-in.
+- Google OAuth test-user access controls the current closed pilot.
 - Clear signed-in identity and a secure sign-out control.
 - Uploaded documents and practice state are held in the Streamlit session rather
   than deliberately written to the repository or an application database.
@@ -51,7 +51,7 @@ screen, or predictor of employability.
 - Profile analysis separates demonstrated evidence, strong matches, role
   priorities, and topics that still need verification.
 - Missing information is treated as unknown rather than proof of a deficiency.
-- Career stage is inferred only from résumé evidence, not from student status,
+- Career stage is inferred only from résumé evidence, not from educational status,
   degree, major, or presumed age.
 - Optional clarifying answers are kept conceptually separate from résumé evidence.
 - A major or course title alone is not treated as proof of mastery.
@@ -108,7 +108,7 @@ screen, or predictor of employability.
 
 - Responsive Streamlit layout for common desktop and mobile widths.
 - Explicit styling for readable controls under Light, Dark, and System themes.
-- University-aligned red and blue visual language.
+- Consistent red and blue visual language.
 - Maintainer identification and Responsible AI guidance on the sign-in page.
 
 ## Models and infrastructure
@@ -123,11 +123,11 @@ screen, or predictor of employability.
 
 Text models perform profile analysis, interview planning, and post-interview
 feedback. Gemini Live handles the spoken interview. Model choice is an
-administrator setting and is intentionally not exposed to students.
+administrator setting and is intentionally not exposed to participants.
 
 ## Deliberate product boundaries
 
-The beta prepares students to do the work themselves. It does not:
+The beta prepares participants to do the work themselves. It does not:
 
 - write, rewrite, or submit a résumé or cover letter;
 - invent skills, achievements, metrics, projects, or experience;
@@ -135,7 +135,7 @@ The beta prepares students to do the work themselves. It does not:
 - score or rank candidates, recommend hiring, or predict employment outcomes;
 - infer protected traits or select an interviewer from candidate characteristics;
 - evaluate appearance, body language, accent, or personality;
-- expose a long occupational taxonomy or student-facing model selector;
+- expose a long occupational taxonomy or participant-facing model selector;
 - retain a permanent application library, history, or transcript archive.
 
 A possible résumé coach is deferred as a separate future application. Its
@@ -145,8 +145,8 @@ of experience.
 ## Known beta limitations
 
 - The current Google OAuth project is in testing mode, so pilot users must be
-  added as test users. Institution-wide access may require a different publishing
-  configuration and coordination with University IT.
+  added individually as test users. A broader release requires an appropriate
+  Google OAuth publishing configuration.
 - The shared API allocation can be exhausted, and provider availability can
   temporarily prevent analysis, planning, voice, or feedback.
 - The live model is a preview model and may change or be withdrawn.
@@ -164,7 +164,7 @@ of experience.
 
 ### Completion and reliability
 
-- Can each test user sign in and sign out without owner privileges?
+- Can each test user sign in and sign out without administrative privileges?
 - Can supported document formats be parsed reliably?
 - Can users finish the complete workflow without assistance?
 - Does microphone permission and live audio work on their devices?
@@ -174,7 +174,7 @@ of experience.
 ### Interview quality
 
 - Are questions traceable to the résumé, role, or supplied context?
-- Does inferred seniority match evidence rather than student status?
+- Does inferred seniority match evidence rather than educational status?
 - Does the interviewer identity fit the role and round?
 - Are tone, difficulty, follow-ups, and duration realistic?
 - Does random persona selection remain independent of candidate traits?
@@ -185,24 +185,23 @@ of experience.
 - Are transcription uncertainties handled cautiously?
 - Are Preparation priorities sparse and supported by meaningful evidence?
 - Are recommendations practical without becoming résumé writing or judgments?
-- Can students explain and act on the feedback?
+- Can participants explain and act on the feedback?
 
 ### Usability and accessibility
 
 - Are instructions and interview-round choices understandable without coaching?
 - Are controls readable in Light, Dark, and System modes?
 - Is the layout usable on common laptop and phone sizes?
-- Do students understand what is processed, cleared, and not formally evaluated?
+- Do participants understand what is processed, cleared, and not formally evaluated?
 
 ## Post-pilot priorities
 
-1. Fix blockers and recurring confusion found in student testing.
+1. Fix blockers and recurring confusion found in pilot testing.
 2. Evaluate grounding, feedback usefulness, and false-positive skill-gap
    observations using de-identified test cases.
 3. Expand automated tests for parsers, schemas, session clearing, PDF reports, and
    deployment configuration.
-4. Decide on OAuth publication and University IT involvement after the closed
-   pilot is satisfactory.
+4. Decide on OAuth publication after the closed pilot is satisfactory.
 5. Add usage and cost controls before a broader rollout or paid-model change.
 6. Replace provisional avatars after original artwork passes the documented asset
    and licensing requirements.

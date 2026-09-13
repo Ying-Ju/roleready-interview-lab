@@ -50,7 +50,9 @@ def generate_interview_plan(
         response_mime_type="application/json",
         response_json_schema=INTERVIEW_PLAN_SCHEMA,
     )
-    preferred_model = os.getenv("FLYER_TEXT_MODEL", DEFAULT_TEXT_MODEL).strip()
+    preferred_model = os.getenv(
+        "ROLEREADY_TEXT_MODEL", os.getenv("FLYER_TEXT_MODEL", DEFAULT_TEXT_MODEL)
+    ).strip()
     models = tuple(dict.fromkeys((preferred_model, *FALLBACK_TEXT_MODELS)))
     last_error: Exception | None = None
     for model in models:

@@ -31,7 +31,9 @@ def evaluate_answer(
     )
     models = tuple(
         dict.fromkeys(
-            (os.getenv("FLYER_TEXT_MODEL", DEFAULT_TEXT_MODEL).strip(), *FALLBACK_TEXT_MODELS)
+            (os.getenv(
+                "ROLEREADY_TEXT_MODEL", os.getenv("FLYER_TEXT_MODEL", DEFAULT_TEXT_MODEL)
+            ).strip(), *FALLBACK_TEXT_MODELS)
         )
     )
     last_error: Exception | None = None

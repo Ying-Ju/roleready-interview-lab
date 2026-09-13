@@ -25,7 +25,7 @@ TURN_SCHEMA = {
 }
 
 SYSTEM_INSTRUCTION = """
-You are conducting a supportive but realistic university mock interview. Evaluate
+You are conducting a supportive but realistic mock interview. Evaluate
 only the answer to the current planned question. Do not make a hiring decision and
 do not mention scores or private assessment. The transition must be one brief,
 neutral, professional sentence; do not coach during the interview.
@@ -51,4 +51,3 @@ FOLLOW-UP ALLOWED: {str(follow_up_allowed).lower()}
 
 Return a private assessment and decide whether one follow-up is necessary.
 """.strip()
-

@@ -40,7 +40,7 @@ def _page(canvas, doc) -> None:
     canvas.line(0.65 * inch, height - 0.45 * inch, width - 0.65 * inch, height - 0.45 * inch)
     canvas.setFont("Helvetica", 8)
     canvas.setFillColor(colors.HexColor("#596273"))
-    canvas.drawString(0.65 * inch, 0.42 * inch, "Flyer Interview Lab | University of Dayton")
+    canvas.drawString(0.65 * inch, 0.42 * inch, "RoleReady Interview Lab")
     canvas.drawRightString(width - 0.65 * inch, 0.42 * inch, f"Page {doc.page}")
     canvas.restoreState()
 
@@ -57,8 +57,8 @@ def create_feedback_pdf(
         leftMargin=0.7 * inch,
         topMargin=0.72 * inch,
         bottomMargin=0.7 * inch,
-        title="Flyer Interview Lab Coaching Report",
-        author="Flyer Interview Lab",
+        title="RoleReady Interview Lab Coaching Report",
+        author="RoleReady Interview Lab",
     )
     base = getSampleStyleSheet()
     title = ParagraphStyle("Title", parent=base["Title"], fontName="Helvetica-Bold",
@@ -78,7 +78,7 @@ def create_feedback_pdf(
 
     story = [
         Spacer(1, 0.08 * inch),
-        Paragraph("Flyer Interview Lab", tag),
+        Paragraph("RoleReady Interview Lab", tag),
         Paragraph("Mock Interview Coaching Report", title),
         Paragraph(
             "A developmental practice summary - not a hiring recommendation or formal assessment.",
