@@ -59,9 +59,29 @@ st.markdown(
     [data-testid="stCaptionContainer"] { color: #526279; }
     div[data-baseweb="select"] > div,
     div[data-testid="stTextInput"] input,
-    div[data-testid="stTextArea"] textarea {
-        color: #172033;
-        background-color: #ffffff;
+    div[data-testid="stTextArea"] textarea,
+    div[data-testid="stNumberInput"] input {
+        color: #172033 !important;
+        -webkit-text-fill-color: #172033 !important;
+        caret-color: #172033 !important;
+        background-color: #ffffff !important;
+    }
+    div[data-testid="stTextInput"] input::placeholder,
+    div[data-testid="stTextArea"] textarea::placeholder,
+    div[data-testid="stNumberInput"] input::placeholder {
+        color: #687386 !important;
+        -webkit-text-fill-color: #687386 !important;
+        opacity: 1 !important;
+    }
+    div[data-baseweb="select"] > div,
+    div[data-baseweb="select"] span,
+    div[data-baseweb="select"] input {
+        color: #172033 !important;
+        -webkit-text-fill-color: #172033 !important;
+        background-color: #ffffff !important;
+    }
+    div[data-baseweb="select"] svg {
+        fill: #526279 !important;
     }
     div[data-testid="stButton"] > button[kind="secondary"],
     div[data-testid="stFormSubmitButton"] > button[kind="secondary"],
