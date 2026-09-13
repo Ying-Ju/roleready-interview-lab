@@ -63,10 +63,45 @@ st.markdown(
         color: #172033;
         background-color: #ffffff;
     }
-    div[data-testid="stButton"] > button[kind="secondary"] {
-        color: #172033;
-        background: #ffffff;
-        border-color: #9da9b8;
+    div[data-testid="stButton"] > button[kind="secondary"],
+    div[data-testid="stFormSubmitButton"] > button[kind="secondary"],
+    div[data-testid="stDownloadButton"] > button,
+    div[data-testid="stLinkButton"] > a {
+        color: #172033 !important;
+        background: #ffffff !important;
+        border-color: #9da9b8 !important;
+    }
+    div[data-testid="stButton"] > button[kind="secondary"]:hover,
+    div[data-testid="stFormSubmitButton"] > button[kind="secondary"]:hover,
+    div[data-testid="stDownloadButton"] > button:hover,
+    div[data-testid="stLinkButton"] > a:hover {
+        color: #002f56 !important;
+        background: #eaf2f8 !important;
+        border-color: #004b87 !important;
+    }
+    div[data-testid="stButton"] > button[kind="primary"],
+    div[data-testid="stFormSubmitButton"] > button[kind="primary"] {
+        color: #ffffff !important;
+        background: #ce1141 !important;
+        border-color: #ce1141 !important;
+    }
+    div[data-testid="stButton"] > button[kind="primary"]:hover,
+    div[data-testid="stFormSubmitButton"] > button[kind="primary"]:hover {
+        background: #a6192e !important;
+        border-color: #a6192e !important;
+    }
+    div[data-testid="stButton"] > button:disabled,
+    div[data-testid="stFormSubmitButton"] > button:disabled,
+    div[data-testid="stDownloadButton"] > button:disabled {
+        color: #687386 !important;
+        background: #e5e9ef !important;
+        border-color: #cbd2dc !important;
+    }
+    div[data-testid="stButton"] button p,
+    div[data-testid="stFormSubmitButton"] button p,
+    div[data-testid="stDownloadButton"] button p,
+    div[data-testid="stLinkButton"] a p {
+        color: inherit !important;
     }
     .fil-account {
         margin: 0.15rem 0 0.75rem;
