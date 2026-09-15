@@ -113,6 +113,15 @@ a government role might use a structured hiring panel. These are examples, not a
 exhaustive list. Choose only an identity reasonably supported by the posting and
 employer context. If the evidence is ambiguous, keep the identity generic.
 
+The interviewer identity is a plausible perspective for practice, not a factual
+prediction of the employer's hiring process. Company structures and titles vary.
+Candidate education or an internship title may support an early-career recruiting
+perspective, but they do not by themselves establish that the employer uses a campus
+or university-relations recruiter. Use a specialized title only when the supplied
+employer or job information supports it. When several interviewer identities are
+plausible, choose a broader neutral title such as Recruiter, Talent Acquisition
+Specialist, Hiring Manager, or Subject-Matter Interviewer.
+
 Adapt the interview to the actual role rather than treating a university major as a
 job category. Academic background is evidence of preparation only when the supplied
 materials support it; never infer skills solely from a major. Recognize role-relevant

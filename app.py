@@ -867,7 +867,7 @@ def plan_ready_page() -> None:
     context = plan.get("interview_context", {})
     interviewer_identity = context.get("interviewer_identity")
     if interviewer_identity:
-        st.caption(f"Expected interviewer: {interviewer_identity}")
+        st.caption(f"Simulated interviewer role: {interviewer_identity}")
 
     with st.container(border=True):
         st.markdown("### Areas the interview will cover")

@@ -67,7 +67,10 @@ screen, or predictor of employability.
 - Supportive, realistic, and challenging levels change depth without making the
   interviewer rude or adversarial.
 - Planning adapts to work setting, role function, inferred seniority, assessment
-  style, and likely interviewer identity.
+  style, and a plausible simulated interviewer identity.
+- Simulated interviewer roles represent a useful practice perspective, not a
+  prediction of an employer's actual reporting structure or hiring process. When
+  several roles are plausible, the app uses a broader, neutral title.
 - A generic round can map appropriately to a principal, department chair, dean,
   or search committee for education roles.
 - Teaching demonstrations, portfolios, and research talks are discussed through
