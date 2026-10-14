@@ -34,6 +34,9 @@ from services.text_interview import evaluate_answer
 
 APP_NAME = "RoleReady Interview Lab"
 DEV_MODE_ENV_VAR = "ROLEREADY_DEV_MODE"
+OVERVIEW_VIDEO_PATH = (
+    Path(__file__).resolve().parent / "assets" / "demo" / "roleready-overview.mp4"
+)
 
 INTERVIEW_ROUND_LABELS = {
     "Recruiter / HR screen": "Initial screening (recruiter or HR)",
@@ -411,6 +414,11 @@ def login_page() -> None:
                 """,
                 unsafe_allow_html=True,
             )
+            with st.expander("See RoleReady in action · 2 min", expanded=False):
+                st.caption(
+                    "Watch a brief walkthrough of the interview practice process."
+                )
+                st.video(str(OVERVIEW_VIDEO_PATH), autoplay=False)
         with login_col:
             with st.container(border=True):
                 st.markdown("### Ready to practice?")
