@@ -430,7 +430,7 @@ def login_page() -> None:
             with st.container(border=True):
                 st.markdown("### Ready to practice?")
                 st.caption(
-                    "Sign in with your University of Dayton Google account "
+                    "Sign in with your University of Dayton account "
                     "(@udayton.edu)."
                 )
                 if st.button("Sign in with Google", type="primary", use_container_width=True):
@@ -441,9 +441,6 @@ def login_page() -> None:
                             "Google sign-in is not configured yet. "
                             "Add the OIDC settings to Streamlit secrets."
                         )
-                st.caption(
-                    "Access is limited to approved University of Dayton beta testers."
-                )
                 st.caption(
                     "Uploaded materials tailor the practice session. Do not upload "
                     "documents containing sensitive personal information."
