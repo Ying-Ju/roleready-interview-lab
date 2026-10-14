@@ -34,6 +34,7 @@ from services.text_interview import evaluate_answer
 
 APP_NAME = "RoleReady Interview Lab"
 DEV_MODE_ENV_VAR = "ROLEREADY_DEV_MODE"
+AUTHORIZED_EMAIL_DOMAIN = "udayton.edu"
 OVERVIEW_VIDEO_PATH = (
     Path(__file__).resolve().parent / "assets" / "demo" / "roleready-overview.mp4"
 )
@@ -311,6 +312,11 @@ def login_page() -> None:
             font-size: 0.92rem;
             line-height: 1.55;
         }
+        .fil-video-gap { height: 0.75rem; }
+        div[data-testid="stExpander"] summary p {
+            color: #ce1141 !important;
+            font-weight: 650;
+        }
         .fil-signin {
             align-self: center;
             overflow: hidden;
@@ -414,6 +420,7 @@ def login_page() -> None:
                 """,
                 unsafe_allow_html=True,
             )
+            st.markdown('<div class="fil-video-gap"></div>', unsafe_allow_html=True)
             with st.expander("See RoleReady in action · 2 min", expanded=False):
                 st.caption(
                     "Watch a brief walkthrough of the interview practice process."
@@ -422,7 +429,10 @@ def login_page() -> None:
         with login_col:
             with st.container(border=True):
                 st.markdown("### Ready to practice?")
-                st.caption("Use a Google account authorized for this closed beta.")
+                st.caption(
+                    "Sign in with your University of Dayton Google account "
+                    "(@udayton.edu)."
+                )
                 if st.button("Sign in with Google", type="primary", use_container_width=True):
                     if auth_is_configured():
                         st.login()
@@ -432,7 +442,7 @@ def login_page() -> None:
                             "Add the OIDC settings to Streamlit secrets."
                         )
                 st.caption(
-                    "Access is limited to approved beta testers."
+                    "Access is limited to approved University of Dayton beta testers."
                 )
                 st.caption(
                     "Uploaded materials tailor the practice session. Do not upload "
@@ -457,9 +467,20 @@ def login_page() -> None:
         )
 
 
+def email_is_authorized(email: object) -> bool:
+    """Return whether an email belongs to the exact authorized domain."""
+    normalized_email = str(email or "").strip().casefold()
+    _, separator, domain = normalized_email.rpartition("@")
+    return bool(separator and domain == AUTHORIZED_EMAIL_DOMAIN)
+
+
 def user_is_allowed() -> bool:
-    """Allow Google accounts admitted by the configured OAuth application."""
-    return bool(getattr(st.user, "is_logged_in", False))
+    """Allow signed-in Google accounts from the University of Dayton domain."""
+    if not getattr(st.user, "is_logged_in", False):
+        return False
+
+    email = st.user.get("email", "")
+    return email_is_authorized(email)
 
 
 def setup_page() -> None:
@@ -1257,7 +1278,10 @@ elif getattr(st.user, "is_logged_in", False):
     if user_is_allowed():
         app_page()
     else:
-        st.error("This Google account is not authorized for the closed beta.")
+        st.error(
+            "RoleReady is currently limited to University of Dayton accounts. "
+            "Please sign out and use an @udayton.edu email address."
+        )
         st.button("Sign out", on_click=st.logout)
 else:
     login_page()
